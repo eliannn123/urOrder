@@ -8,8 +8,8 @@ import Link from "next/link";
 export default function ForgotPassword({
   searchParams,
 }: {
-  searchParams: Message;
-}) {
+  searchParams: Record<string, string> | null;
+}) {  
   return (
     <>
       <form className="flex-1 flex flex-col w-full gap-2 text-foreground [&>input]:mb-6 min-w-64 max-w-64 mx-auto">
@@ -28,7 +28,7 @@ export default function ForgotPassword({
           <SubmitButton formAction={forgotPasswordAction}>
             Reset Password
           </SubmitButton>
-          <FormMessage message={searchParams} />
+          <FormMessage message={searchParams as Message} />
         </div>
       </form>
     </>
