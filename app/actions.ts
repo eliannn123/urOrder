@@ -4,14 +4,13 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { UUID } from "crypto";
 
 export const signUpAction = async (formData: FormData) => {
   const username = formData.get("username")?.toString();
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
-  const supabase = createClient();
-  const origin = headers().get("origin");
+  const supabase = await createClient();
+  const origin = (await headers()).get("origin");
 
   if (!email || !password || !username) {
     return { error: "Username, email and password are required" };
@@ -57,7 +56,7 @@ export const signUpAction = async (formData: FormData) => {
 export const signInAction = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -72,7 +71,7 @@ export const signInAction = async (formData: FormData) => {
 };
 
 export const deleteUserAction = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
     error: userError,
@@ -107,8 +106,8 @@ export const deleteUserAction = async () => {
 
 export const forgotPasswordAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
-  const supabase = createClient();
-  const origin = headers().get("origin");
+  const supabase = await createClient();
+  const origin = (await headers()).get("origin");
   const callbackUrl = formData.get("callbackUrl")?.toString();
 
   if (!email) {
@@ -140,7 +139,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
 };
 
 export const resetPasswordAction = async (formData: FormData) => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;
@@ -177,13 +176,13 @@ export const resetPasswordAction = async (formData: FormData) => {
 };
 
 export const signOutAction = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
   await supabase.auth.signOut();
   return redirect("/");
 };
 
 export const addClientAction = async (formData: FormData) => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const name = formData.get("name")?.toString();
   const email = formData.get("email")?.toString();
   const phone = formData.get("phone")?.toString();
@@ -194,7 +193,7 @@ export const addClientAction = async (formData: FormData) => {
     .select();
 };
 export const addSupplierAction = async (formData: FormData) => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const name = formData.get("name")?.toString();
   const person_name = formData.get("person_name")?.toString();
   const email = formData.get("email")?.toString();
@@ -213,11 +212,10 @@ export const addSupplierAction = async (formData: FormData) => {
       },
     ])
     .select();
-  console.log(error, data);
 };
 
 export const countClientsAction = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { count, error } = await supabase
     .from("clients")
     .select("*", { count: "exact" });
@@ -230,7 +228,7 @@ export const countClientsAction = async () => {
   return count || 0;
 };
 export const countSuppliersAction = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { count, error } = await supabase
     .from("suppliers")
     .select("*", { count: "exact" });
@@ -244,7 +242,7 @@ export const countSuppliersAction = async () => {
 };
 
 export const fetchClientsAction = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.from("clients").select("*");
 
   if (error) {
@@ -255,7 +253,7 @@ export const fetchClientsAction = async () => {
   return data;
 };
 export const fetchSuppliersAction = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.from("suppliers").select("*");
 
   if (error) {
@@ -274,7 +272,7 @@ export const updateClientAction = async (clientData: {
   person_name?: string;
   type?: string;
 }) => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("clients")
@@ -304,7 +302,7 @@ export const updateSupplierAction = async (supplierData: {
   person_name?: string;
   type?: string;
 }) => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("suppliers")
@@ -326,7 +324,7 @@ export const updateSupplierAction = async (supplierData: {
   return data;
 };
 export const getUserAction = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
     error: authError,
@@ -353,7 +351,7 @@ export const updateUserAction = async (userData :{
   email: string;
   password: string
 }) =>{
-  const supabase = createClient();
+  const supabase = await createClient();
   const data = await supabase.auth.updateUser({
     email: userData.email,
     password : userData.password

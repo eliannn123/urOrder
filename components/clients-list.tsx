@@ -22,7 +22,7 @@ import { Skeleton } from "./ui/skeleton";
 
 const handlefetchClients = async () => {
   const clients = await fetchClientsAction();
-  return clients;
+  return (clients as unknown) as { name: string; email?: string; phone?: string; id?: number }[];
 };
 const handleUpdateClients = async (updateData: {
   id: string;
@@ -63,7 +63,6 @@ const ClientList = () => {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "clients" },
         (payload) => {
-          console.log("Nuevo cliente insertado:", payload);
           fetchClients();
         }
       )
@@ -71,7 +70,6 @@ const ClientList = () => {
         "postgres_changes",
         { event: "DELETE", schema: "public", table: "clients" },
         (payload) => {
-          console.log("Cliente eliminado:", payload);
           fetchClients();
         }
       )
@@ -79,7 +77,6 @@ const ClientList = () => {
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "clients" },
         (payload) => {
-          console.log("Cliente actualizado:", payload);
           fetchClients();
         }
       )

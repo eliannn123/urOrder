@@ -24,9 +24,10 @@ const SuppliersList = () => {
     const supabase = createClient();
 
     const fetchSuppliers = async () => {
-        const suppliersData: { name: string; email?: string; phone?: string, person_name?: string }[] = await handlefetchSuppliers();
-        setSuppliers(suppliersData.slice(0, 5)); 
-        setIsLoading(false)
+        const rawData = await handlefetchSuppliers();
+        const suppliersData = rawData as unknown as { name: string; email?: string; phone?: string; person_name?: string }[];
+        setSuppliers(suppliersData.slice(0, 5));
+        setIsLoading(false);
     };
 
     // Llamar a la función de inmediato para cargar los datos iniciales

@@ -22,9 +22,12 @@ const ClientList = () => {
     const supabase = createClient();
 
     const fetchClients = async () => {
-      const clientsData: { name: string; email?: string; phone?: string }[] =
-        await handlefetchClients();
-        setClients(clientsData.slice(0,5));
+      const clientsData = (await handlefetchClients()) as unknown as { 
+        name: string; 
+        email?: string; 
+        phone?: string 
+      }[];
+      setClients(clientsData.slice(0,5));
       setIsLoading(false);
     };
 
@@ -36,7 +39,6 @@ const ClientList = () => {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "clients" },
         (payload) => {
-          console.log("Nuevo cliente insertado:", payload);
           fetchClients(); // Volver a cargar la lista cuando se inserte un cliente
         }
       )
@@ -44,7 +46,6 @@ const ClientList = () => {
         "postgres_changes",
         { event: "DELETE", schema: "public", table: "clients" },
         (payload) => {
-          console.log("Cliente eliminado:", payload);
           fetchClients(); // Volver a cargar la lista cuando se elimine un cliente
         }
       )
@@ -52,7 +53,6 @@ const ClientList = () => {
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "clients" },
         (payload) => {
-          console.log("Cliente actualizado:", payload);
           fetchClients(); // Volver a cargar la lista cuando se elimine un cliente
         }
       )

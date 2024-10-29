@@ -64,7 +64,9 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUserData = async () => {
       const userData = await getUserAction();
-      setUser(userData);
+      if (userData && 'email' in userData && 'username' in userData) {
+        setUser(userData as { email: string; username: string });
+      }
     };
 
     fetchUserData();
@@ -85,7 +87,6 @@ export default function Dashboard() {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "clients" },
         (payload) => {
-          console.log("Nuevo cliente agregado:", payload);
           fetchClientsCount();
         }
       )
@@ -119,7 +120,6 @@ export default function Dashboard() {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "suppliers" },
         (payload) => {
-          console.log("Nuevo proveedor agregado:", payload);
           fetchSuppliersCount(); // Actualizar el conteo cuando se agrega un nuevo proveedor
         }
       )
@@ -127,7 +127,6 @@ export default function Dashboard() {
         "postgres_changes",
         { event: "DELETE", schema: "public", table: "suppliers" },
         (payload) => {
-          console.log("Proveedor eliminado:", payload);
           fetchSuppliersCount(); // Actualizar el conteo cuando se elimina un proveedor
         }
       )

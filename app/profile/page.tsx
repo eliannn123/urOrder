@@ -4,7 +4,7 @@ import Profile from "@/components/profileCard";
 
 
 export default async function ProtectedPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },
@@ -12,8 +12,6 @@ export default async function ProtectedPage() {
   
   if (!user) {
     return redirect("/");
-  } else {
-    console.log(user)
   }
 
   return (

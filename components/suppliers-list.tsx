@@ -40,7 +40,14 @@ const handleUpdateSupplier = async (updateData: {
 };
 const handlefetchClients = async () => {
   const clients = await fetchSuppliersAction();
-  return clients;
+  return clients as unknown as {
+    name: string;
+    email?: string;
+    phone?: string;
+    person_name?: string;
+    type?: string;
+    id?: number;
+  }[];
 };
 const ClientList = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -89,7 +96,6 @@ const ClientList = () => {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "suppliers" },
         (payload) => {
-          console.log("Nuevo cliente insertado:", payload);
           fetchClients(); // Volver a cargar la lista cuando se inserte un cliente
         }
       )
@@ -97,7 +103,6 @@ const ClientList = () => {
         "postgres_changes",
         { event: "DELETE", schema: "public", table: "suppliers" },
         (payload) => {
-          console.log("Cliente eliminado:", payload);
           fetchClients(); // Volver a cargar la lista cuando se elimine un cliente
         }
       )
@@ -105,7 +110,6 @@ const ClientList = () => {
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "suppliers" },
         (payload) => {
-          console.log("Cliente actualizado:", payload);
           fetchClients(); // Volver a cargar la lista cuando se elimine un cliente
         }
       )
