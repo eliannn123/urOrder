@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { fetchClientsAction } from "@/app/actions";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
-import { ChevronRight, Divide, Mail } from "lucide-react";
+import { ChevronRight, Mail } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
@@ -64,7 +64,7 @@ const ClientList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="space-y-8">
       {isLoading ? (<div className="space-y-8">
                         {/* Mostrar 5 esqueletos como placeholders */}
                         {[...Array(5)].map((_, i) => (
@@ -82,28 +82,27 @@ const ClientList = () => {
                           </div>
                         ))}
                       </div>) : (
-            <div className="space-y-8 ml-4">
-              {clients.map((client, i) => (
-                <div key={i} className='flex items-center'>
-                  <Avatar className='h-9 w-9'>
-                    <AvatarFallback>{client.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <div className='ml-3 space-y-1'>
-                    <p className='text-sm font-medium leading-none'>
-                      {client.name}
-                    </p>
-                    <div className='flex items-center text-sm text-muted-foreground'>
-                      <Mail className='mr-1 h-3 w-3' />
-                      {client.email ? client.email : client.phone}
-                    </div>
-                  </div>
-                  <Link href='/clients' className='ml-auto'>
-                    <Button variant='ghost' size='sm'>
-                      <ChevronRight className='h-4 w-4' />
-                    </Button>
-                  </Link>
+              clients.map((client, i) => (
+                <div key={i} className="flex items-center">
+                <Avatar className="h-9 w-9">
+                  <AvatarFallback className="bg-gray-700 flex h-full w-full items-center justify-center rounded-full text-white">
+                    {client.name[0].toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="ml-4 space-y-1">
+                <p className="text-sm font-medium leading-none">{client.name}</p>
+                <div className="flex items-center text-sm text-muted-foreground">
+                    <Mail className="mr-1 h-3 w-3" />
+                    {client.email ? client.email : client.phone}
                 </div>
-              ))} </div>)}
+                </div>
+                <Link href="/suppliers" className="ml-auto">
+                <Button variant="ghost" size="sm">
+                    <ChevronRight className="h-4 w-4" />
+                </Button>
+                </Link>
+            </div>
+              )))}
   </div>
   );
 };

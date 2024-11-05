@@ -40,7 +40,7 @@ export default function Profile() {
       
     return (
       <div>
-      {isLoading ? (<div className="min-h-screen bg-gray-50 py-8">
+      {isLoading ? (<div className="min-h-screen bg-gray-900 py-8">
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader>
@@ -81,7 +81,7 @@ export default function Profile() {
           </CardContent>
         </Card>
       </div>
-    </div>) : (<div className="min-h-screen bg-gray-50 py-8">
+    </div>) : (<div className="min-h-screen bg-gray-900 py-8">
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader>
@@ -89,7 +89,7 @@ export default function Profile() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center space-x-4">
-              <Avatar className="w-24 h-24">
+              <Avatar className="w-24 h-24 bg-gray-700">
                 <AvatarFallback>{user?.username[0].toUpperCase()}</AvatarFallback>
               </Avatar>
               <div>

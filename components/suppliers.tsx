@@ -5,7 +5,7 @@ import {
   Mail,Users
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/client";
 import { fetchSuppliersAction } from "@/app/actions";
@@ -78,7 +78,7 @@ const SuppliersList = () => {
             suppliers.map((client, i) => (
             <div key={i} className="flex items-center">
                 <Avatar className="h-9 w-9">
-                <AvatarFallback>{client.name[0]}</AvatarFallback>
+                  <AvatarFallback className="bg-gray-700">{client.name[0]}</AvatarFallback>
                 </Avatar>
                 <div className="ml-4 space-y-1">
                 <p className="text-sm font-medium leading-none">{client.name}</p>
