@@ -5,7 +5,7 @@ urOrder is a system (in progress) that helps small entrepeneurs and people who a
 The users can add all the clients that they want, view all their data ( Name, Phone number, Email), modify data, and delete clients.
 ### Suppliers
 The users can also add all the suppliers that they want, view their data ( Name, Name of the contact person, Phone number, Email, Type of product), modify data, and delete suppliers.
-### Sales record ( Working rigth now)
+### Sales record ( Working right now)
 The users can add to each client and each supplier a record of the sales that they have made with them, so the users can see past sales in order to help them make new sales, and also have control.
 # urOrder - es 
 urOrder es un sistema (en desarrollo) que ayuda a pequeños emprendedores y personas que están en las primeras etapas de su negocio y desean un lugar donde almacenar a sus clientes y proveedores, y administrar sus datos.
